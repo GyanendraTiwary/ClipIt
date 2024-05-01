@@ -17,8 +17,6 @@ __pycache__/
 # Database files or directories
 *.db
 
-# Uploaded files
-app/static/uploads/
 
 # Other
 *.bak
