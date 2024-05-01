@@ -1,0 +1,26 @@
+# Virtual environment
+env/
+
+# Compiled Python files
+*.pyc
+
+# Byte-compiled Python files
+__pycache__/
+
+# IDE or editor-specific files and directories
+.vscode/
+.idea/
+
+# Environment configuration files
+.env
+
+# Database files or directories
+*.db
+
+# Uploaded files
+app/static/uploads/
+
+# Other
+*.bak
+*.swp
+.DS_Store
