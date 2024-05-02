@@ -1,42 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Retrieve Clipboard Entry</title>
-    <link
-      href="{{ url_for('static', filename='styles.css') }}"
-      rel="stylesheet"
-    />
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Retrieve Clipboard Entry</title>
+  <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap JavaScript (optional, if you need Bootstrap's JavaScript features) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Bootstrap JavaScript (optional, if you need Bootstrap's JavaScript features) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Retrieve Clipboard Entry</h1>
-      <form method="POST">
-        <div class="form-group">
-          <label for="pin">Enter 6-digit PIN:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="pin"
-            name="pin"
-            maxlength="6"
-            minlength="6"
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Retrieve</button>
-      </form>
-      <!-- Button to go back to index.html -->
-      <a href="{{ url_for('main.index') }}" class="btn btn-secondary mt-3">Go Back</a>
-    </div>
-  </body>
+  <style>
+    body {
+      background-color: #212529;
+      color: #f8f9fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 100px auto; /* Centering the container */
+      padding: 30px;
+      background-color: #343a40;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #007bff;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .form-label {
+      color: #ced4da;
+    }
+
+    .form-control {
+      background-color: #495057;
+      border-color: #495057;
+      color: #f8f9fa;
+      width: 50px; /* Adjust the width as needed */
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background-color: #5a6268;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Retrieve Clipboard Entry</h1>
+    <form method="POST">
+      <div class="form-group d-flex justify-content-center"> <!-- Centering the input fields -->
+        <input
+          type="text"
+          class="form-control mx-1 digit-input"
+          id="digit1"
+          name="digit1"
+          maxlength="1"
+          minlength="1"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mx-1 digit-input"
+          id="digit2"
+          name="digit2"
+          maxlength="1"
+          minlength="1"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mx-1 digit-input"
+          id="digit3"
+          name="digit3"
+          maxlength="1"
+          minlength="1"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mx-1 digit-input"
+          id="digit4"
+          name="digit4"
+          maxlength="1"
+          minlength="1"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mx-1 digit-input"
+          id="digit5"
+          name="digit5"
+          maxlength="1"
+          minlength="1"
+          required
+        />
+        <input
+          type="text"
+          class="form-control mx-1 digit-input"
+          id="digit6"
+          name="digit6"
+          maxlength="1"
+          minlength="1"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">Retrieve</button>
+    </form>
+    <!-- Button to go back to index.html -->
+    <a href="{{ url_for('main.index') }}" class="btn btn-secondary mt-3">Go Back</a>
+  </div>
+
+  <script>
+    // Function to move focus to the next input box
+    document.querySelectorAll('.digit-input').forEach((input, index, inputs) => {
+      input.addEventListener('input', (e) => {
+        const value = e.target.value;
+        if (value.length === 1) {
+          if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        }
+      });
+    });
+  </script>
+</body>
 </html>

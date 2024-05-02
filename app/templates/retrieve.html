@@ -1,88 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clipboard Entry</title>
-  <link
-    href="{{ url_for('static', filename='styles.css') }}"
-    rel="stylesheet"
-  />
-  <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clipboard Entry</title>
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-  <!-- Bootstrap JavaScript (optional, if you need Bootstrap's JavaScript features) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JavaScript (optional, if you need Bootstrap's JavaScript features) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-  <style>
-    img {
-      height: 100px;
-      width: 200px;
-    }
-  </style>
+    <style>
+        body {
+            background-color: #212529;
+            color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #343a40;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .form-label {
+            color: #ced4da;
+        }
+        .form-control {
+            background-color: #495057;
+            border-color: #495057;
+            color: #f8f9fa;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Clipboard Entry</h1>
-    <p><strong>PIN:</strong> {{ entry.pin }}</p>
+    <div class="container">
+        <h1>Clipboard Entry</h1>
+        <p><strong>PIN:</strong> {{ entry.pin }}</p>
 
-    {% if entry.password_protected %}
-      {% if not password_verified %}
+        {% if entry.password_protected %}
+        {% if not password_verified %}
         <form action="{{ url_for('main.verify_password', pin=entry.pin) }}" method="post">
-          <div class="form-group">
-            <label for="password">Enter Password:</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group">
+                <label for="password">Enter Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
-      {% else %}
-        {% if password_correct %}
-          <div class="alert alert-success" role="alert">
-            Password verification successful. You can now view and delete the entry.
-          </div>
-          <p><strong>Text:</strong> {{ entry.content }}</p>
-          {% if entry.file_path %}
-            <p>
-              <strong>Image:</strong>
-              <img
-                src="{{ url_for('static', filename='uploads/' + entry.file_path.split('/')[-1]) }}"
-                alt="Image"
-              />
-            </p>
-          {% endif %}
-          <form action="{{ url_for('main.delete', pin=entry.pin) }}" method="post">
-            <button type="submit" class="btn btn-danger">
-              Delete from Clipboard
-            </button>
-          </form>
         {% else %}
-          <div class="alert alert-danger" role="alert">
-            Incorrect password. Please try again.
-          </div>
-        {% endif %}
-      {% endif %}
-    {% else %}
+        {% if password_correct %}
+        <div class="alert alert-success" role="alert">
+            Password verification successful. You can now view and delete the entry.
+        </div>
         <p><strong>Text:</strong> {{ entry.content }}</p>
         {% if entry.file_path %}
-          <p>
+        <p>
+            <strong>Image:</strong>
+            <img
+            src="{{ url_for('static', filename='uploads/' + entry.file_path.split('/')[-1]) }}"
+            alt="Image"
+            />
+        </p>
+        {% endif %}
+        <form action="{{ url_for('main.delete', pin=entry.pin) }}" method="post">
+            <button type="submit" class="btn btn-danger">
+                Delete from Clipboard
+            </button>
+        </form>
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+            Incorrect password. Please try again.
+        </div>
+        {% endif %}
+        {% endif %}
+        {% else %}
+        <p><strong>Text:</strong> {{ entry.content }}</p>
+        {% if entry.file_path %}
+        <p>
             <strong>Image:</strong>
             <img
             src="{{ url_for('static', filename=entry.file_path.replace('app/static/', '').replace('%5C', '\\').replace('\\', '/')) }}"
-              alt="Image"
+            alt="Image"
             />
-          </p>
+        </p>
         {% endif %}
         <form action="{{ url_for('main.delete', pin=entry.pin) }}" method="post">
-          <button type="submit" class="btn btn-danger">
-            Delete from Clipboard
-          </button>
+            <button type="submit" class="btn btn-danger">
+                Delete from Clipboard
+            </button>
         </form>
-    {% endif %}
-    <!-- Button to go back to index.html -->
-    <a href="{{ url_for('main.index') }}" class="btn btn-secondary mt-3">Go Back</a>
-  </div>
+        {% endif %}
+        <!-- Button to go back to index.html -->
+        <a href="{{ url_for('main.index') }}" class="btn btn-secondary mt-3">Go Back</a>
+    </div>
 </body>
 </html>

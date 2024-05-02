@@ -5,8 +5,8 @@ from urllib.parse import quote_plus
 
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'your_secret_key'
-    username = '...'
-    password = '...'
+    username = 'gyanendrat'
+    password = 'Innova6768'
 
     # Escape username and password according to RFC 3986
     escaped_username = quote_plus(username)
